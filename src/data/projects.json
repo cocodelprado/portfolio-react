@@ -1,0 +1,11 @@
+[
+  {
+    "id": "proj-001",
+    "title": "Dashboard Analytics",
+    "description": "Interface de visualisation de données pour un client e-commerce.",
+    "techs": ["React", "Chart.js", "CSS Modules"],
+    "type": "Stage",
+    "liveUrl": "https://exemple.com",
+    "imageUrl": "/images/dashboard.png"
+  }
+]
