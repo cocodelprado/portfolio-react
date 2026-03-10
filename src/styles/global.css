@@ -53,3 +53,22 @@ body {
   padding-top: 40px; /* On garde l'espace pour ta navbar ultra-fine */
   -webkit-font-smoothing: antialiased; /* Rend la police plus fine et élégante */
 }
+
+
+/* --- Style de la page À propos --- */
+.about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.spline-wrapper {
+  width: 100%;
+  max-width: 800px;
+  height: 500px; /* La hauteur de ton présentoir */
+  margin-top: 40px;
+  border-radius: 20px; /* Des bords arrondis très doux */
+  overflow: hidden;
+}
