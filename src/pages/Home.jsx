@@ -4,7 +4,7 @@ import { Environment, Float, OrbitControls, ContactShadows, useGLTF, Html } from
 
 // 🕴️ Le composant qui charge TON scan 3D via Cloudinary
 function MyBodyModel() {
-  const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1773162374/Watch12_gdnkux.glb"
+  const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1773165558/Watch124_k2h6uf.glb"
   const { scene } = useGLTF(urlCloudinary)
 
   return (
@@ -29,7 +29,14 @@ function Loader() {
 
 export default function Home() {
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#f5f5f7' }}>
+    // ✨ C'EST ICI QUE LA MAGIE OPÈRE : Remplacement de backgroundColor par le dégradé radial
+    <div style={{ 
+      width: '100vw', 
+      height: '100vh', 
+      position: 'relative', 
+      overflow: 'hidden', 
+      background: 'radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%)' 
+    }}>
       
       {/* 1. TYPOGRAPHIE EN ARRIÈRE-PLAN */}
       <div style={{
@@ -61,7 +68,7 @@ export default function Home() {
           <h1 style={{ 
             fontSize: '15vw', 
             fontWeight: 900, 
-            margin: '40px 0 0 0', // Marge négative pour coller les textes si besoin
+            margin: '40px 0 0 0', // L'espace que tu as bien réglé
             letterSpacing: '-0.02em',
             color: '#e5e5ea', 
             lineHeight: 0.8,
