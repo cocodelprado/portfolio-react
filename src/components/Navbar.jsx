@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
     return (
-        <nav>
-            <ul>
+        <nav className="apple-navbar" >
+            <ul className="apple-nav-list">
                 <li>
                     <NavLink to="/">Acceuil</NavLink>
                     </li>
