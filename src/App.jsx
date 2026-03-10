@@ -4,11 +4,12 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
+import Navbar from './components/Navbar';
 
 export default function App() {
   return (
     <BrowserRouter>
-      {/* Ta future Navbar ira ici */}
+      <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/projects' element={<Projects />} />
