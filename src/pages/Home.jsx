@@ -4,22 +4,19 @@ import { Environment, Float, OrbitControls, ContactShadows, useGLTF, Html } from
 
 // 🕴️ Le composant qui charge TON scan 3D via Cloudinary
 function MyBodyModel() {
-  // Ton lien direct Cloudinary
   const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1773162374/Watch12_gdnkux.glb"
-  
   const { scene } = useGLTF(urlCloudinary)
 
   return (
     <primitive 
       object={scene} 
-      scale={2.75} /* Taille ajustée pour ton scan */
-      position={[0, -4.75, 0]} /* Remonté pour chevaucher le mot "PORTFOLIO" */
+      scale={3.25} 
+      position={[0, -4.75, 0]} 
       rotation={[0, 0, 0]} 
     />
   )
 }
 
-// ⏳ Écran de chargement élégant
 function Loader() {
   return (
     <Html center>
@@ -34,10 +31,10 @@ export default function Home() {
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#f5f5f7' }}>
       
-      {/* 1. TYPOGRAPHIE EN ARRIÈRE-PLAN (zIndex: 1) */}
+      {/* 1. TYPOGRAPHIE EN ARRIÈRE-PLAN */}
       <div style={{
         position: 'absolute',
-        top: 0,
+        top: 0, // Ajuste ce chiffre pour monter/descendre l'ensemble des textes
         left: 0,
         width: '100%',
         height: '100%',
@@ -46,12 +43,25 @@ export default function Home() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        pointerEvents: 'none'
       }}>
-        <div style={{ textAlign: 'center', transform: 'translateY(-150px)' }}>
+        <div style={{ textAlign: 'center' }}>
+          {/* NOM EN PREMIER */}
+          <h2 style={{ 
+            fontSize: '3rem', 
+            fontWeight: 700, 
+            margin: '0',
+            letterSpacing: '-0.04em',
+            color: '#1d1d1f'
+          }}>
+            Corentin Commino.
+          </h2>
+
+          {/* PORTFOLIO EN DESSOUS */}
           <h1 style={{ 
             fontSize: '15vw', 
             fontWeight: 900, 
-            margin: '0',  
+            margin: '40px 0 0 0', // Marge négative pour coller les textes si besoin
             letterSpacing: '-0.02em',
             color: '#e5e5ea', 
             lineHeight: 0.8,
@@ -59,19 +69,10 @@ export default function Home() {
           }}>
             PORTFOLIO
           </h1>
-          <h2 style={{ 
-            fontSize: '3rem', 
-            fontWeight: 700, 
-            margin: '20px 0 0 0',
-            letterSpacing: '-0.04em',
-            color: '#1d1d1f'
-          }}>
-            Corentin Commino.
-          </h2>
         </div>
       </div>
 
-      {/* 2. SCÈNE 3D AU PREMIER PLAN (zIndex: 2) */}
+      {/* 2. SCÈNE 3D AU PREMIER PLAN */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2, touchAction: 'none' }}>
         <Canvas style={{ touchAction: 'none' }} camera={{ position: [0, 0, 8], fov: 45 }}>
           
@@ -79,14 +80,12 @@ export default function Home() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
           <Environment preset="studio" />
 
-          {/* Effet de flottement doux */}
           <Float rotationIntensity={0.1} floatIntensity={0.3} speed={1}>
             <Suspense fallback={<Loader />}>
               <MyBodyModel />
             </Suspense>
           </Float>
 
-          {/* Caméra avec rotation automatique */}
           <OrbitControls 
             enablePan={false} 
             enableZoom={true} 
@@ -97,9 +96,9 @@ export default function Home() {
             autoRotateSpeed={6}
           />
 
-          {/* Ombre portée sous tes pieds */}
+          {/* Ombre recalée à -4.75 pour toucher tes pieds */}
           <ContactShadows 
-            position={[0, -1, 0]} /* Calée sur la position de ton personnage */
+            position={[0, -4.75, 0]} 
             opacity={0.6} 
             scale={15} 
             blur={2} 
