@@ -12,8 +12,8 @@ function MyBodyModel() {
   return (
     <primitive 
       object={scene} 
-      scale={1.5} /* Taille ajustée pour ton scan */
-      position={[0, -1, 0]} /* Remonté pour chevaucher le mot "PORTFOLIO" */
+      scale={2.75} /* Taille ajustée pour ton scan */
+      position={[0, -4.75, 0]} /* Remonté pour chevaucher le mot "PORTFOLIO" */
       rotation={[0, 0, 0]} 
     />
   )
@@ -24,7 +24,7 @@ function Loader() {
   return (
     <Html center>
       <div style={{ color: '#1d1d1f', fontFamily: 'sans-serif', fontSize: '10px', letterSpacing: '5px' }}>
-        CHARGEMENT...
+        J'arrive
       </div>
     </Html>
   )
@@ -47,11 +47,11 @@ export default function Home() {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <div style={{ textAlign: 'center', transform: 'translateY(-80px)' }}>
+        <div style={{ textAlign: 'center', transform: 'translateY(-150px)' }}>
           <h1 style={{ 
             fontSize: '15vw', 
             fontWeight: 900, 
-            margin: '0',
+            margin: '0',  
             letterSpacing: '-0.02em',
             color: '#e5e5ea', 
             lineHeight: 0.8,
@@ -66,7 +66,7 @@ export default function Home() {
             letterSpacing: '-0.04em',
             color: '#1d1d1f'
           }}>
-            L'Ingénierie Web.
+            Corentin Commino.
           </h2>
         </div>
       </div>
@@ -90,11 +90,11 @@ export default function Home() {
           <OrbitControls 
             enablePan={false} 
             enableZoom={true} 
-            minDistance={4}   
+            minDistance={12}   
             maxDistance={12}  
             target={[0, 0, 0]} 
             autoRotate={true}
-            autoRotateSpeed={1.5}
+            autoRotateSpeed={6}
           />
 
           {/* Ombre portée sous tes pieds */}
