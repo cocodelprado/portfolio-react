@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment, Float, OrbitControls, ContactShadows, useGLTF, Html } from '@react-three/drei'
 
@@ -17,11 +17,37 @@ function MyBodyModel() {
   )
 }
 
+// ⏳ Écran de chargement animé avec les "..."
 function Loader() {
+  const [dots, setDots] = useState('')
+
+  useEffect(() => {
+    // Boucle qui s'active toutes les 400ms
+    const interval = setInterval(() => {
+      setDots(prev => {
+        if (prev === '...') return ''
+        if (prev === '..') return '...'
+        if (prev === '.') return '..'
+        return '.'
+      })
+    }, 400) // Tu peux baisser à 300 pour que ça clignote plus vite
+
+    // Nettoyage à la fin du chargement
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <Html center>
-      <div style={{ color: '#1d1d1f', fontFamily: 'sans-serif', fontSize: '10px', letterSpacing: '5px' }}>
-        J'arrive
+      <div style={{ 
+        color: '#1d1d1f', 
+        fontFamily: 'sans-serif', 
+        fontSize: '20px', // Un peu plus grand pour que les points soient bien visibles
+        letterSpacing: '5px',
+        width: '40px', // Empêche le tremblement
+        textAlign: 'left',
+        fontWeight: 'bold'
+      }}>
+        {dots}
       </div>
     </Html>
   )
@@ -29,7 +55,7 @@ function Loader() {
 
 export default function Home() {
   return (
-    // ✨ C'EST ICI QUE LA MAGIE OPÈRE : Remplacement de backgroundColor par le dégradé radial
+    // ✨ Dégradé radial façon "Studio Apple"
     <div style={{ 
       width: '100vw', 
       height: '100vh', 
@@ -41,7 +67,7 @@ export default function Home() {
       {/* 1. TYPOGRAPHIE EN ARRIÈRE-PLAN */}
       <div style={{
         position: 'absolute',
-        top: 0, // Ajuste ce chiffre pour monter/descendre l'ensemble des textes
+        top: 0, 
         left: 0,
         width: '100%',
         height: '100%',
@@ -68,7 +94,7 @@ export default function Home() {
           <h1 style={{ 
             fontSize: '15vw', 
             fontWeight: 900, 
-            margin: '40px 0 0 0', // L'espace que tu as bien réglé
+            margin: '40px 0 0 0', 
             letterSpacing: '-0.02em',
             color: '#e5e5ea', 
             lineHeight: 0.8,
@@ -103,7 +129,6 @@ export default function Home() {
             autoRotateSpeed={6}
           />
 
-          {/* Ombre recalée à -4.75 pour toucher tes pieds */}
           <ContactShadows 
             position={[0, -4.75, 0]} 
             opacity={0.6} 
