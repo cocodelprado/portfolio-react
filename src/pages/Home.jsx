@@ -4,7 +4,9 @@ import { Environment, Float, OrbitControls, ContactShadows, useGLTF, Html } from
 
 // 🕴️ Le composant pour ton corps entier
 function MyBodyModel() {
-  const { scene } = useGLTF('/Watch.glb') // Garde ton fichier actuel
+  // Remplace 'Watch.glb' par le nom tout en minuscules
+const { scene } = useGLTF('/me.glb') 
+
 
   return (
     <primitive 
