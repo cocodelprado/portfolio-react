@@ -2,32 +2,28 @@ import React, { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment, Float, OrbitControls, ContactShadows, useGLTF, Html } from '@react-three/drei'
 
-// 🕴️ Le composant pour ton corps entier
+// 🕴️ Le composant qui charge TON scan 3D via Cloudinary
 function MyBodyModel() {
-  // Remplace 'Watch.glb' par le nom tout en minuscules
-const { scene } = useGLTF('/me.glb') 
-
+  // Ton lien direct Cloudinary
+  const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1773162374/Watch12_gdnkux.glb"
+  
+  const { scene } = useGLTF(urlCloudinary)
 
   return (
     <primitive 
       object={scene} 
-      scale={1} 
-      
-      /* 1. LA HAUTEUR DU PERSONNAGE */
-      /* Je l'ai remonté de -2.5 à -1. S'il est encore trop bas, mets 0. 
-         S'il est trop haut, essaie -1.5 */
-      position={[0, -1, 0]} 
-      
+      scale={1.5} /* Taille ajustée pour ton scan */
+      position={[0, -1, 0]} /* Remonté pour chevaucher le mot "PORTFOLIO" */
       rotation={[0, 0, 0]} 
     />
   )
 }
 
-// ⏳ Écran de chargement
+// ⏳ Écran de chargement élégant
 function Loader() {
   return (
     <Html center>
-      <div style={{ color: '#1d1d1f', fontFamily: 'sans-serif', fontSize: '12px', letterSpacing: '4px' }}>
+      <div style={{ color: '#1d1d1f', fontFamily: 'sans-serif', fontSize: '10px', letterSpacing: '5px' }}>
         CHARGEMENT...
       </div>
     </Html>
@@ -38,7 +34,7 @@ export default function Home() {
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', backgroundColor: '#f5f5f7' }}>
       
-      {/* 1. LA TYPOGRAPHIE AU FOND (zIndex: 1) */}
+      {/* 1. TYPOGRAPHIE EN ARRIÈRE-PLAN (zIndex: 1) */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -51,7 +47,6 @@ export default function Home() {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        {/* J'ai légèrement remonté le bloc texte pour laisser de la place à ton corps */}
         <div style={{ textAlign: 'center', transform: 'translateY(-80px)' }}>
           <h1 style={{ 
             fontSize: '15vw', 
@@ -76,7 +71,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 2. LA SCÈNE 3D AU PREMIER PLAN (zIndex: 2) */}
+      {/* 2. SCÈNE 3D AU PREMIER PLAN (zIndex: 2) */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2, touchAction: 'none' }}>
         <Canvas style={{ touchAction: 'none' }} camera={{ position: [0, 0, 8], fov: 45 }}>
           
@@ -84,26 +79,27 @@ export default function Home() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
           <Environment preset="studio" />
 
+          {/* Effet de flottement doux */}
           <Float rotationIntensity={0.1} floatIntensity={0.3} speed={1}>
             <Suspense fallback={<Loader />}>
               <MyBodyModel />
             </Suspense>
           </Float>
 
-          {/* 2. LA CAMÉRA AUTO-ROTATIVE */}
+          {/* Caméra avec rotation automatique */}
           <OrbitControls 
             enablePan={false} 
             enableZoom={true} 
-            minDistance={3}   
-            maxDistance={3}  
+            minDistance={4}   
+            maxDistance={12}  
             target={[0, 0, 0]} 
-            autoRotate={true} /* L'astuce magique ! */
-            autoRotateSpeed={1.5} /* Ajuste la vitesse : 1 est lent, 5 est rapide */
+            autoRotate={true}
+            autoRotateSpeed={1.5}
           />
 
-          {/* 3. L'OMBRE REMONTÉE (Doit être à la même hauteur que le personnage) */}
+          {/* Ombre portée sous tes pieds */}
           <ContactShadows 
-            position={[0, -1, 0]} /* Remontée à -1 pour matcher les pieds */
+            position={[0, -1, 0]} /* Calée sur la position de ton personnage */
             opacity={0.6} 
             scale={15} 
             blur={2} 
