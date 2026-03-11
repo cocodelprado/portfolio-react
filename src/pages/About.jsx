@@ -1,37 +1,145 @@
-import React from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Stars, MeshTransmissionMaterial, Float } from '@react-three/drei'
+import { Environment, Float, OrbitControls, ContactShadows, useGLTF, Html } from '@react-three/drei'
 
-export default function About() {
+// 🕴️ Le composant qui charge TON scan 3D via Cloudinary
+function MyBodyModel() {
+  const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1773223317/GlbSimon_qknh10.glb"
+  const { scene } = useGLTF(urlCloudinary)
+
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#00050a', position: 'relative' }}>
-      <div className="hud-overlay">
-        <div className="hud-corner top-left">SYSTEM: STABLE <br/> ENGINE: IDLE</div>
-        <div className="hud-corner bottom-right">LOC: SECTOR_BIO <br/> STATUS: SCANNING...</div>
+    <primitive 
+      object={scene} 
+      scale={8} 
+      position={[0, -2.19, 0]} 
+      rotation={[0, 0, 0]} 
+    />
+  )
+}
+
+// ⏳ Écran de chargement animé avec les "..."
+function Loader() {
+  const [dots, setDots] = useState('')
+
+  useEffect(() => {
+    // Boucle qui s'active toutes les 400ms
+    const interval = setInterval(() => {
+      setDots(prev => {
+        if (prev === '...') return ''
+        if (prev === '..') return '...'
+        if (prev === '.') return '..'
+        return '.'
+      })
+    }, 400) // Tu peux baisser à 300 pour que ça clignote plus vite
+
+    // Nettoyage à la fin du chargement
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <Html center>
+      <div style={{ 
+        color: '#1d1d1f', 
+        fontFamily: 'sans-serif', 
+        fontSize: '20px', // Un peu plus grand pour que les points soient bien visibles
+        letterSpacing: '5px',
+        width: '40px', // Empêche le tremblement
+        textAlign: 'left',
+        fontWeight: 'bold'
+      }}>
+        {dots}
+      </div>
+    </Html>
+  )
+}
+
+export default function Home() {
+  return (
+    // ✨ Dégradé radial façon "Studio Apple"
+    <div style={{ 
+      width: '100vw', 
+      height: '100vh', 
+      position: 'relative', 
+      overflow: 'hidden', 
+      background: 'radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%)' 
+    }}>
+      
+      {/* 1. TYPOGRAPHIE EN ARRIÈRE-PLAN */}
+      <div style={{
+        position: 'absolute',
+        top: 0, 
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 1, 
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        pointerEvents: 'none'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          {/* NOM EN PREMIER */}
+          <h2 style={{ 
+            fontSize: '3rem', 
+            fontWeight: 700, 
+            margin: '0',
+            letterSpacing: '-0.04em',
+            color: '#1d1d1f'
+          }}>
+            Simon Marc.
+          </h2>
+
+          {/* PORTFOLIO EN DESSOUS */}
+          <h1 style={{ 
+            fontSize: '15vw', 
+            fontWeight: 900, 
+            margin: '40px 0 0 0', 
+            letterSpacing: '-0.02em',
+            color: '#e5e5ea', 
+            lineHeight: 0.8,
+            whiteSpace: 'nowrap'
+          }}>
+            PORTFOLIO
+          </h1>
+        </div>
       </div>
 
-      <Canvas camera={{ position: [0, 0, 8] }}>
-        {/* Étoiles très lentes et calmes */}
-        <Stars radius={100} depth={50} count={2000} factor={2} saturation={0} fade speed={0.2} />
-        
-        {/* La "Nébuleuse" de ton CV : une forme translucide Apple style */}
-        <Float speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
-          <mesh>
-            <torusGeometry args={[2, 0.6, 16, 100]} />
-            <MeshTransmissionMaterial transmission={1} roughness={0.1} thickness={1} chromaticAberration={0.1} color="#00f2ff" />
-          </mesh>
-        </Float>
-        
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={2} color="#00f2ff" />
-      </Canvas>
+      {/* 2. SCÈNE 3D AU PREMIER PLAN */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2, touchAction: 'none' }}>
+        <Canvas style={{ touchAction: 'none' }} camera={{ position: [0, 0, 8], fov: 45 }}>
+          
+          <ambientLight intensity={1.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
+          <Environment preset="studio" />
 
-      <div style={{ position: 'absolute', top: '20%', right: '10%', color: '#fff', textAlign: 'right', maxWidth: '400px' }}>
-        <h2 style={{ fontSize: '3rem', color: '#00f2ff' }}>L'Exploration.</h2>
-        <p style={{ fontSize: '1.2rem', lineHeight: '1.6', color: '#86868b' }}>
-          Passionné par la mécanique des moteurs et la précision du code, je navigue entre deux mondes.
-        </p>
+          <Float rotationIntensity={0.1} floatIntensity={0.3} speed={1}>
+            <Suspense fallback={<Loader />}>
+              <MyBodyModel />
+            </Suspense>
+          </Float>
+
+          <OrbitControls 
+            enablePan={false} 
+            enableZoom={true} 
+            minDistance={12}   
+            maxDistance={12}  
+            target={[0, 0, 0]} 
+            autoRotate={true}
+            autoRotateSpeed={6}
+          />
+
+          <ContactShadows 
+            position={[0, -4.75, 0]} 
+            opacity={0.6} 
+            scale={15} 
+            blur={2} 
+            far={3} 
+            color="#000000" 
+          />
+        </Canvas>
       </div>
+
     </div>
   )
 }
