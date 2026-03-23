@@ -19,17 +19,17 @@ function BadgeTech({ name }) {
   )
 }
 
-// 🕴️ Ton scan 3D via Cloudinary
+// 🕴️ Ton scan 3D via Cloudinary (Commodore Amiga 500)
 function MyBodyModel() {
-  const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1773223317/GlbSimon_qknh10.glb"
+  const urlCloudinary = "https://res.cloudinary.com/drcx8ckvv/image/upload/v1774261941/commodore_amiga_500__computer_l6xl5j.glb"
   const { scene } = useGLTF(urlCloudinary)
 
   return (
     <primitive 
       object={scene} 
-      scale={8} 
-      position={[0, -2.19, 0]} 
-      rotation={[0, 0, 0]} 
+      scale={1} 
+      position={[0, -1, 0]} 
+      rotation={[-12.2, 0, 0]} 
     />
   )
 }
@@ -60,14 +60,13 @@ function Loader() {
 }
 
 export default function About() {
-  // Ta liste de compétences pour les badges
   const skills = ['React.js', 'Three.js', 'JavaScript', 'Tailwind', 'Git', 'Vercel']
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: 'radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%)' }}>
       
-      {/* 1. SCÈNE 3D EN ARRIÈRE-PLAN (zIndex: 1) */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
+      {/* ✨ width à 55% et collé à droite (right: 0) */}
+      <div style={{ position: 'absolute', top: 0, right: 0, width: '55%', height: '100%', zIndex: 1 }}>
         <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
           <ambientLight intensity={1.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
@@ -81,7 +80,6 @@ export default function About() {
 
           <OrbitControls enablePan={false} enableZoom={true} minDistance={12} maxDistance={12} autoRotate={true} autoRotateSpeed={2} />
 
-          {/* Ombre recalée exactement sous tes pieds (-2.19) */}
           <ContactShadows position={[0, -2.19, 0]} opacity={0.6} scale={15} blur={2} far={3} color="#000000" />
         </Canvas>
       </div>
@@ -96,14 +94,14 @@ export default function About() {
         zIndex: 2, 
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: '10%', // Aligné à gauche pour laisser le modèle 3D respirer à droite
-        pointerEvents: 'none' // Laisse les clics passer à travers pour pouvoir tourner le modèle 3D
+        paddingLeft: '10%', // Aligné à gauche
+        pointerEvents: 'none' 
       }}>
         
         {/* CARTE EN VERRE (Glassmorphism) */}
         <div style={{ 
           maxWidth: '550px', 
-          pointerEvents: 'auto', // Réactive les clics spécifiquement pour la carte (pour le bouton CV)
+          pointerEvents: 'auto', 
           backgroundColor: 'rgba(255, 255, 255, 0.6)', 
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
@@ -118,24 +116,22 @@ export default function About() {
           </h1>
           
           <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: '#424245', marginBottom: '30px' }}>
-            Salut, je suis Simon Marc. Développeur Front-End passionné par la création d'interfaces modernes et d'expériences web immersives. J'adore mêler code et design pour donner vie à des projets interactifs (comme ce portfolio en 3D !).
+            Salut, je suis Corentin Commino. Développeur Front-End passionné par la création d'interfaces modernes et d'expériences web immersives. J'adore mêler code et design pour donner vie à des projets interactifs (comme ce portfolio en 3D !).
           </p>
 
           <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: '0 0 15px 0', color: '#1d1d1f' }}>
             Mes compétences techniques
           </h2>
           
-          {/* Affichage des BadgeTech */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '40px' }}>
             {skills.map((skill, index) => (
               <BadgeTech key={index} name={skill} />
             ))}
           </div>
 
-          {/* 💡 2. Le bouton de téléchargement du CV */}
           <a 
             href="/cv.pdf" 
-            download="CV_Simon_Marc.pdf"
+            download="CV_Corentin_Commino.pdf"
             style={{
               display: 'inline-block',
               backgroundColor: '#0071e3', 
