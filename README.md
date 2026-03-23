@@ -1,16 +1,25 @@
-# React + Vite
+# 🌐 Portfolio 3D - Corentin Commino
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bienvenue sur le code source de mon portfolio interactif en 3D. Ce projet met en avant mes compétences en **Ingénierie Web** à travers une expérience utilisateur immersive, fluide et moderne.
 
-Currently, two official plugins are available:
+## ✨ Fonctionnalités clés
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Modèle 3D Interactif** : Intégration d'un scan 3D personnel au format `.glb`, hébergé sur un CDN (Cloudinary) pour des performances optimales.
+- **Effets Atmosphériques** : Utilisation de brume volumétrique (`<Cloud>`) et de particules flottantes (`<Sparkles>`) pour une direction artistique de type "Studio".
+- **Typographie Profonde** : Jeu de superposition (z-index) entre les textes de fond et le modèle 3D au premier plan.
+- **Performances** : Textures optimisées et rendu WebGL natif dans le navigateur.
 
-## React Compiler
+## 🛠️ Stack Technique
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React.js** (Framework UI)
+- **React Three Fiber** (Moteur 3D React)
+- **React Three Drei** (Aides et composants 3D avancés)
+- **Cloudinary** (Hébergement d'assets 3D)
 
-## Expanding the ESLint configuration
+## 🚀 Installation en local
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Si vous souhaitez faire tourner ce projet sur votre machine :
+
+1. Clonez le dépôt :
+   ```bash
+   git clone [https://github.com/VOTRE_PSEUDO/VOTRE_REPO.git](https://github.com/VOTRE_PSEUDO/VOTRE_REPO.git)
