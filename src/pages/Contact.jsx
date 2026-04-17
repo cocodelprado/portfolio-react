@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { Environment, Float, OrbitControls, useGLTF, Html, Center } from '@react-three/drei'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Environment, Float, OrbitControls, useGLTF, Html } from '@react-three/drei'
 import ContactForm from '../components/ContactForm'
 import QRCodeWidget from '../components/QRCodeWidget'
 
@@ -10,15 +10,60 @@ const MODEL_URL = 'https://res.cloudinary.com/drcx8ckvv/image/upload/v1775757753
 function PhoneBooth() {
   const { scene } = useGLTF(MODEL_URL)
   return (
-    <Center>
-      <Float floatIntensity={0.25} rotationIntensity={0.04} speed={1.0}>
-        <primitive object={scene} scale={1.6} position={[-8, 2, 0]} />
-      </Float>
-    </Center>
+    <Float floatIntensity={0.25} rotationIntensity={0.04} speed={1.0}>
+      <primitive object={scene} scale={0.5} position={[0, -2.5, 0]} />
+    </Float>
   )
 }
 useGLTF.preload(MODEL_URL)
 
+/* ─── Pluie ─── */
+function Rain() {
+  const count = 400
+  const ref = useRef()
+
+  const positions = useMemo(() => {
+    const arr = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
+      arr[i * 3]     = (Math.random() - 0.5) * 20
+      arr[i * 3 + 1] = Math.random() * 20
+      arr[i * 3 + 2] = (Math.random() - 0.5) * 10
+    }
+    return arr
+  }, [])
+
+  useFrame(() => {
+    if (!ref.current) return
+    const pos = ref.current.geometry.attributes.position.array
+    for (let i = 0; i < count; i++) {
+      pos[i * 3 + 1] -= 0.13
+      if (pos[i * 3 + 1] < -5) {
+        pos[i * 3 + 1] = 15
+      }
+    }
+    ref.current.geometry.attributes.position.needsUpdate = true
+  })
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          args={[positions, 3]}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        color="#a0c4ff"
+        size={0.045}
+        transparent
+        opacity={0.5}
+        sizeAttenuation
+      />
+    </points>
+  )
+}
+
+/* ─── Loader ─── */
 function Loader() {
   const [dots, setDots] = useState('')
   useEffect(() => {
@@ -151,9 +196,9 @@ export default function Contact() {
       <GlobalStyles />
       <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#ffffff' }}>
 
-        {/* Scène 3D */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Canvas camera={{ position: [11, -2, 9], fov: 90 }} gl={{ antialias: true, alpha: false }}>
+        {/* ── Scène 3D — moitié droite ── */}
+        <div style={{ position: 'absolute', top: 0, right: 0, width: '55%', height: '100%', zIndex: 0 }}>
+          <Canvas camera={{ position: [0, 0.5, 9], fov: 44 }} gl={{ antialias: true, alpha: false }}>
             <color attach="background" args={['#ffffff']} />
             <ambientLight intensity={1.2} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
@@ -161,6 +206,7 @@ export default function Contact() {
             <Environment preset="city" />
             <React.Suspense fallback={<Loader />}>
               <PhoneBooth />
+              <Rain />
             </React.Suspense>
             <OrbitControls
               enablePan={false} enableZoom={false}
@@ -170,16 +216,16 @@ export default function Contact() {
           </Canvas>
         </div>
 
-        {/* Panneau Contact */}
+        {/* ── Panneau Contact ── */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 2,
           display: 'flex', alignItems: 'center',
-          paddingLeft: '5%', paddingTop: '48px', paddingBottom: '48px',
+          paddingLeft: '5%', paddingTop: '100px', paddingBottom: '48px',
           pointerEvents: 'none',
         }}>
           <div className="glass-panel" style={{
             maxWidth: '600px', width: '100%',
-            maxHeight: 'calc(100vh - 96px)',
+            maxHeight: 'calc(100vh - 148px)',
             pointerEvents: 'auto',
             backgroundColor: 'rgba(255,255,255,0.78)',
             backdropFilter: 'blur(24px)',
@@ -214,7 +260,6 @@ export default function Contact() {
             {/* Zone scrollable */}
             <div className="contact-scroll" style={{ overflowY: 'auto', flex: 1, paddingRight: '4px' }}>
 
-              {/* Formulaire (composant séparé) */}
               <ContactForm />
 
               {/* Séparateur */}
@@ -226,12 +271,12 @@ export default function Contact() {
                 <div style={{ flex: 1, height: '1px', background: 'rgba(0,0,0,0.07)' }} />
               </div>
 
-              {/* QR Code vCard (composant séparé) */}
               <QRCodeWidget size={84} />
 
             </div>
           </div>
         </div>
+
       </div>
     </>
   )

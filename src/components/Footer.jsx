@@ -14,7 +14,7 @@ export default function Footer() {
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
       borderTop: '1px solid rgba(0,0,0,0.06)',
-      padding: '32px 40px',
+      padding: '16px 40px',
       boxSizing: 'border-box',
     }}>
       <div style={{
@@ -24,15 +24,15 @@ export default function Footer() {
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '24px',
+        gap: '12px',
       }}>
         {/* Infos + nav */}
         <div>
-          <p style={{ fontFamily: AP, fontWeight: 700, fontSize: '1rem', color: '#1d1d1f', marginBottom: '6px' }}>
+          <p style={{ fontFamily: AP, fontWeight: 700, fontSize: '0.85rem', color: '#1d1d1f', marginBottom: '6px' }}>
             Corentin Commino.
           </p>
-          <p style={{ fontFamily: AP, fontSize: '0.82rem', color: '#6e6e73', marginBottom: '12px' }}>
-            Développeur Front-End React — Promo 2025
+          <p style={{ fontFamily: AP, fontSize: '0.74rem', color: '#6e6e73', marginBottom: '12px' }}>
+            L3 - M2i
           </p>
           <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
             {[['/', 'Accueil'], ['/about', 'À propos'], ['/projects', 'Projets'], ['/contact', 'Contact']].map(([to, label]) => (
@@ -53,7 +53,7 @@ export default function Footer() {
             borderRadius: '10px', overflow: 'hidden', padding: '6px',
             background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
           }}>
-            <QRCodeSVG value={vcardUrl} size={72} fgColor="#1E3A5F" bgColor="#ffffff" level="H" includeMargin={false} />
+            <QRCodeSVG value={vcardUrl} size={44} fgColor="#1E3A5F" bgColor="#ffffff" level="H" includeMargin={false} />
           </div>
           <p style={{ fontFamily: AP, fontSize: '0.7rem', color: '#aeaeb2', textAlign: 'center' }}>
             Scannez pour me contacter
@@ -67,8 +67,8 @@ export default function Footer() {
 
       {/* Copyright */}
       <div style={{
-        maxWidth: '1100px', margin: '20px auto 0',
-        paddingTop: '16px', borderTop: '1px solid rgba(0,0,0,0.05)',
+        maxWidth: '1100px', 
+        borderTop: '1px solid rgba(0,0,0,0.05)',
         display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px',
       }}>
         <p style={{ fontFamily: AP, fontSize: '0.76rem', color: '#aeaeb2' }}>
