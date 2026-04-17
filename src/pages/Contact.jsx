@@ -11,7 +11,7 @@ function PhoneBooth() {
   const { scene } = useGLTF(MODEL_URL)
   return (
     <Float floatIntensity={0.25} rotationIntensity={0.04} speed={1.0}>
-      <primitive object={scene} scale={0.5} position={[0, -2.5, 0]} />
+      <primitive object={scene} scale={0.5} position={[4, -2.5, 0]} />
     </Float>
   )
 }
@@ -27,21 +27,18 @@ function Rain() {
     const velocities = new Float32Array(count)
 
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 22
+      const x = (Math.random() - 0.5) * 30
       const y = Math.random() * 22
       const z = (Math.random() - 0.5) * 12
 
-      // Point haut
       positions[i * 6]     = x
       positions[i * 6 + 1] = y
       positions[i * 6 + 2] = z
 
-      // Point bas (trait incliné)
       positions[i * 6 + 3] = x + 0.08
       positions[i * 6 + 4] = y - 0.35
       positions[i * 6 + 5] = z
 
-      // Vitesse individuelle
       velocities[i] = 0.10 + Math.random() * 0.12
     }
 
@@ -58,13 +55,11 @@ function Rain() {
       pos[i * 6 + 1] -= speed
       pos[i * 6 + 4] -= speed
 
-      // Dérive horizontale (vent léger)
       pos[i * 6]     += 0.005
       pos[i * 6 + 3] += 0.005
 
-      // Reset en haut quand hors écran
       if (pos[i * 6 + 1] < -6) {
-        const x = (Math.random() - 0.5) * 22
+        const x = (Math.random() - 0.5) * 30
         const z = (Math.random() - 0.5) * 12
 
         pos[i * 6]     = x
@@ -88,11 +83,7 @@ function Rain() {
           args={[positions, 3]}
         />
       </bufferGeometry>
-      <lineBasicMaterial
-        color="#8ab4d4"
-        transparent
-        opacity={0.45}
-      />
+      <lineBasicMaterial color="#8ab4d4" transparent opacity={0.45} />
     </lineSegments>
   )
 }
@@ -235,20 +226,23 @@ export default function Contact() {
   return (
     <>
       <GlobalStyles />
+
+      {/* Fond dégradé identique à About — pleine page */}
       <div style={{
         width: '100vw', height: '100vh',
         position: 'relative', overflow: 'hidden',
-        background: '#ffffff',
+        background: 'radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%)',
       }}>
 
-        {/* ── Scène 3D — moitié droite ── */}
-        <div style={{ position: 'absolute', top: 0, right: 0, width: '55%', height: '100%', zIndex: 0 }}>
+        {/* ── Canvas pleine largeur — zéro trait blanc ── */}
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
           <Canvas camera={{ position: [0, 0.5, 9], fov: 44 }} gl={{ antialias: true, alpha: false }}>
-            <color attach="background" args={['#ffffff']} />
+            {/* Couleur WebGL alignée sur la fin du dégradé CSS */}
+            <color attach="background" args={['#e5e5ea']} />
             <ambientLight intensity={1.2} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
             <pointLight position={[-4, 2, 4]} intensity={0.6} color="#ffe8e8" />
-            <Environment preset="city" />
+            <Environment preset="studio" />
             <React.Suspense fallback={<Loader />}>
               <PhoneBooth />
               <Rain />
@@ -275,13 +269,13 @@ export default function Contact() {
             maxWidth: '600px', width: '100%',
             maxHeight: 'calc(100vh - 148px)',
             pointerEvents: 'auto',
-            backgroundColor: 'rgba(255,255,255,0.78)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            backgroundColor: 'rgba(255,255,255,0.72)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
             padding: '36px 36px 30px',
             borderRadius: '26px',
-            boxShadow: '0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 48px rgba(0,0,0,0.08)',
-            border: '1px solid rgba(200,210,230,0.5)',
+            boxShadow: '0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 48px rgba(0,0,0,0.06)',
+            border: '1px solid rgba(200,210,230,0.45)',
             display: 'flex', flexDirection: 'column',
           }}>
 
