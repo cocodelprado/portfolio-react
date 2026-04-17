@@ -74,7 +74,7 @@ export default function About() {
           </h1>
 
           <p style={{ fontSize: '1rem', lineHeight: '1.6', color: '#424245', marginBottom: '30px', fontFamily: AP }}>
-            Salut, je suis <strong>Corentin Commino</strong>. Développeur Front-End passionné par la création d'interfaces modernes et d'expériences web immersives. J'adore mêler code et design pour donner vie à des projets interactifs (comme ce portfolio en 3D !).
+            Bonjour, je suis <strong>Corentin Commino</strong>. Etudiant passionné par la création d'interfaces modernes et d'expériences web immersives. J'adore mêler code et design pour donner vie à des projets interactifs (comme ce portfolio en 3D !).
           </p>
 
           <h2 style={{ fontSize: '1.2rem', fontWeight: 700, margin: '0 0 14px 0', color: '#1d1d1f', fontFamily: AP }}>
