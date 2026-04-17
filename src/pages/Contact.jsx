@@ -11,7 +11,7 @@ function PhoneBooth() {
   const { scene } = useGLTF(MODEL_URL)
   return (
     <Float floatIntensity={0.25} rotationIntensity={0.04} speed={1.0}>
-      <primitive object={scene} scale={0.5} position={[4, -2.5, 0]} />
+      <primitive object={scene} scale={0.5} position={[0, -2.5, 0]} />
     </Float>
   )
 }
@@ -27,7 +27,7 @@ function Rain() {
     const velocities = new Float32Array(count)
 
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 30
+      const x = (Math.random() - 0.5) * 22
       const y = Math.random() * 22
       const z = (Math.random() - 0.5) * 12
 
@@ -59,7 +59,7 @@ function Rain() {
       pos[i * 6 + 3] += 0.005
 
       if (pos[i * 6 + 1] < -6) {
-        const x = (Math.random() - 0.5) * 30
+        const x = (Math.random() - 0.5) * 22
         const z = (Math.random() - 0.5) * 12
 
         pos[i * 6]     = x
@@ -234,11 +234,13 @@ export default function Contact() {
         background: 'radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%)',
       }}>
 
-        {/* ── Canvas pleine largeur — zéro trait blanc ── */}
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-          <Canvas camera={{ position: [0, 0.5, 9], fov: 44 }} gl={{ antialias: true, alpha: false }}>
-            {/* Couleur WebGL alignée sur la fin du dégradé CSS */}
-            <color attach="background" args={['#e5e5ea']} />
+        {/* ── Scène 3D — moitié droite, canvas transparent ── */}
+        <div style={{ position: 'absolute', top: 0, right: 0, width: '55%', height: '100%', zIndex: 0 }}>
+          <Canvas
+            camera={{ position: [0, 0.5, 9], fov: 44 }}
+            gl={{ antialias: true, alpha: true }}
+          >
+            {/* Pas de <color> → transparent, le dégradé CSS passe au travers */}
             <ambientLight intensity={1.2} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
             <pointLight position={[-4, 2, 4]} intensity={0.6} color="#ffe8e8" />
