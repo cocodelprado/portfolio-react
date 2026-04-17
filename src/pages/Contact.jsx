@@ -17,49 +17,83 @@ function PhoneBooth() {
 }
 useGLTF.preload(MODEL_URL)
 
-/* ─── Pluie ─── */
+/* ─── Pluie réaliste ─── */
 function Rain() {
-  const count = 400
+  const count = 500
   const ref = useRef()
 
-  const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3)
+  const { positions, velocities } = useMemo(() => {
+    const positions  = new Float32Array(count * 6)
+    const velocities = new Float32Array(count)
+
     for (let i = 0; i < count; i++) {
-      arr[i * 3]     = (Math.random() - 0.5) * 20
-      arr[i * 3 + 1] = Math.random() * 20
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 10
+      const x = (Math.random() - 0.5) * 22
+      const y = Math.random() * 22
+      const z = (Math.random() - 0.5) * 12
+
+      // Point haut
+      positions[i * 6]     = x
+      positions[i * 6 + 1] = y
+      positions[i * 6 + 2] = z
+
+      // Point bas (trait incliné)
+      positions[i * 6 + 3] = x + 0.08
+      positions[i * 6 + 4] = y - 0.35
+      positions[i * 6 + 5] = z
+
+      // Vitesse individuelle
+      velocities[i] = 0.10 + Math.random() * 0.12
     }
-    return arr
+
+    return { positions, velocities }
   }, [])
 
   useFrame(() => {
     if (!ref.current) return
     const pos = ref.current.geometry.attributes.position.array
+
     for (let i = 0; i < count; i++) {
-      pos[i * 3 + 1] -= 0.13
-      if (pos[i * 3 + 1] < -5) {
-        pos[i * 3 + 1] = 15
+      const speed = velocities[i]
+
+      pos[i * 6 + 1] -= speed
+      pos[i * 6 + 4] -= speed
+
+      // Dérive horizontale (vent léger)
+      pos[i * 6]     += 0.005
+      pos[i * 6 + 3] += 0.005
+
+      // Reset en haut quand hors écran
+      if (pos[i * 6 + 1] < -6) {
+        const x = (Math.random() - 0.5) * 22
+        const z = (Math.random() - 0.5) * 12
+
+        pos[i * 6]     = x
+        pos[i * 6 + 1] = 18
+        pos[i * 6 + 2] = z
+
+        pos[i * 6 + 3] = x + 0.08
+        pos[i * 6 + 4] = 17.65
+        pos[i * 6 + 5] = z
       }
     }
+
     ref.current.geometry.attributes.position.needsUpdate = true
   })
 
   return (
-    <points ref={ref}>
+    <lineSegments ref={ref}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
           args={[positions, 3]}
         />
       </bufferGeometry>
-      <pointsMaterial
-        color="#a0c4ff"
-        size={0.045}
+      <lineBasicMaterial
+        color="#8ab4d4"
         transparent
-        opacity={0.5}
-        sizeAttenuation
+        opacity={0.45}
       />
-    </points>
+    </lineSegments>
   )
 }
 
@@ -72,7 +106,10 @@ function Loader() {
   }, [])
   return (
     <Html center>
-      <div style={{ color: '#1d1d1f', fontFamily: 'monospace', fontSize: '18px', letterSpacing: '5px', fontWeight: 'bold' }}>
+      <div style={{
+        color: '#1d1d1f', fontFamily: 'monospace',
+        fontSize: '18px', letterSpacing: '5px', fontWeight: 'bold',
+      }}>
         {dots}
       </div>
     </Html>
@@ -170,7 +207,11 @@ const GlobalStyles = () => {
         text-decoration: none;
         transition: background 0.2s, border-color 0.2s, transform 0.2s;
       }
-      .vcf-btn:hover { background: rgba(0,113,227,0.07); border-color: #0071e3; transform: scale(1.03); }
+      .vcf-btn:hover {
+        background: rgba(0,113,227,0.07);
+        border-color: #0071e3;
+        transform: scale(1.03);
+      }
 
       .contact-scroll::-webkit-scrollbar { width: 3px; }
       .contact-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -194,7 +235,11 @@ export default function Contact() {
   return (
     <>
       <GlobalStyles />
-      <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#ffffff' }}>
+      <div style={{
+        width: '100vw', height: '100vh',
+        position: 'relative', overflow: 'hidden',
+        background: '#ffffff',
+      }}>
 
         {/* ── Scène 3D — moitié droite ── */}
         <div style={{ position: 'absolute', top: 0, right: 0, width: '55%', height: '100%', zIndex: 0 }}>
@@ -209,9 +254,12 @@ export default function Contact() {
               <Rain />
             </React.Suspense>
             <OrbitControls
-              enablePan={false} enableZoom={false}
-              autoRotate autoRotateSpeed={0.6}
-              minPolarAngle={Math.PI / 3.5} maxPolarAngle={Math.PI / 2}
+              enablePan={false}
+              enableZoom={false}
+              autoRotate
+              autoRotateSpeed={0.6}
+              minPolarAngle={Math.PI / 3.5}
+              maxPolarAngle={Math.PI / 2}
             />
           </Canvas>
         </div>
@@ -248,7 +296,8 @@ export default function Contact() {
               </span>
               <h1 style={{
                 fontFamily: AP, fontSize: '2.6rem', fontWeight: 800,
-                letterSpacing: '-0.04em', color: '#1d1d1f', lineHeight: 1.05, marginBottom: '8px',
+                letterSpacing: '-0.04em', color: '#1d1d1f',
+                lineHeight: 1.05, marginBottom: '8px',
               }}>
                 Me Contacter.
               </h1>
