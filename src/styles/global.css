@@ -68,6 +68,16 @@ body {
 }
 
 .nav-links a:hover {
-  color: var(--text-main); /* Devient noir au survol */
+  color: var(--text-main);
+}
+
+/* Lien actif NavLink */
+.nav-links a.active {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.nav-brand a.active {
+  color: var(--text-main);
 }
 

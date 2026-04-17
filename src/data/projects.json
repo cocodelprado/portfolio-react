@@ -1,11 +1,123 @@
 [
   {
-    "id": "proj-001",
-    "title": "Dashboard Analytics",
-    "description": "Interface de visualisation de données pour un client e-commerce.",
-    "techs": ["React", "Chart.js", "CSS Modules"],
+    "id": "assuremer-1",
+    "title": "Renouvellement des postes de travail",
+    "description": "Équipement nomade écologique pour le télétravail : étude comparative, écolabel et gestion des licences.",
+    "techs": ["Windows 11", "Écolabel", "Licences"],
     "type": "Stage",
-    "liveUrl": "https://exemple.com",
-    "imageUrl": "/images/dashboard.png"
+    "company": "Assure-MER",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/06c53b_d7a7514c369d4e6e911166d426acd962.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-06-01T00:00:00Z"
+  },
+  {
+    "id": "assuremer-2",
+    "title": "Masterisation WDS / PXE",
+    "description": "Déploiement du rôle WDS pour masteriser les postes via PXE avec procédure complète.",
+    "techs": ["WDS", "PXE", "Windows Server"],
+    "type": "Stage",
+    "company": "Assure-MER",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/06c53b_ffa2d0a929a74ef0981cfc701b866436.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-06-15T00:00:00Z"
+  },
+  {
+    "id": "assuremer-3",
+    "title": "Solution de sauvegarde",
+    "description": "Comparaison de solutions, essai Windows Server Backup, registre de traitement RGPD.",
+    "techs": ["WSB", "RGPD", "Sauvegarde"],
+    "type": "Stage",
+    "company": "Assure-MER",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_8682299652ec4bb085d074d9318995c2.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-07-01T00:00:00Z"
+  },
+  {
+    "id": "greentech-1",
+    "title": "Serveur Active Directory",
+    "description": "AD centralisé avec GPO, DHCP et DNS pour gérer utilisateurs et ressources réseau.",
+    "techs": ["Active Directory", "GPO", "DHCP", "DNS"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_f74ada2329e0477ba12a9b7213830ce2.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-09-01T00:00:00Z"
+  },
+  {
+    "id": "greentech-2",
+    "title": "Centre d'assistance GLPI",
+    "description": "Déploiement GLPI pour la gestion structurée des incidents et tickets IT.",
+    "techs": ["GLPI", "ITSM", "Helpdesk"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_4e4f5ba649d94e16965d8cfe96b28104.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-09-15T00:00:00Z"
+  },
+  {
+    "id": "greentech-3",
+    "title": "Firewall Stormshield",
+    "description": "Pare-feu Stormshield avec règles de filtrage et contrôle optimal des flux réseau.",
+    "techs": ["Stormshield", "Firewall", "Filtrage"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_67968f0348da4aba88a673606940225e.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-10-01T00:00:00Z"
+  },
+  {
+    "id": "greentech-4",
+    "title": "Serveur de messagerie HMail",
+    "description": "Messagerie interne HMail + Thunderbird pour confidentialité et administration centralisée.",
+    "techs": ["HMailServer", "Thunderbird", "SMTP"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_4c356de43ba84c0999563ad5b7175711.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-10-15T00:00:00Z"
+  },
+  {
+    "id": "greentech-5",
+    "title": "Serveur WEB DMZ + Zabbix",
+    "description": "Serveur web en zone DMZ et supervision Zabbix pour surveiller les performances en temps réel.",
+    "techs": ["Apache", "DMZ", "Zabbix"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_4b10d00fc8ee4daaa05d8b5a3289eb69.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-11-01T00:00:00Z"
+  },
+  {
+    "id": "greentech-6",
+    "title": "HAProxy + Load Balancing",
+    "description": "Répartition de charge et haute disponibilité sur 2 serveurs web via HAProxy.",
+    "techs": ["HAProxy", "Load Balancing", "Linux"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_52b8d31b37c240869b99a4336b85cc33.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-11-15T00:00:00Z"
+  },
+  {
+    "id": "greentech-7",
+    "title": "Serveur WSUS",
+    "description": "Centralisation et automatisation des mises à jour Windows pour l'ensemble du parc.",
+    "techs": ["WSUS", "Windows Server", "Patch"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_ba3873460d624cddb1c117f69da63cac.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "greentech-8",
+    "title": "Borne WiFi ARUBA",
+    "description": "Configuration d'une borne Aruba pour une couverture WiFi optimale et sécurisée.",
+    "techs": ["Aruba", "WiFi", "Sécurité réseau"],
+    "type": "Stage",
+    "company": "GREENTECH",
+    "liveUrl": "https://848e6f89-4cff-4f31-b0f5-37e7da2515ca.filesusr.com/ugd/558313_49833c0b8d294705aa6a9fff70611895.pdf",
+    "imageUrl": null,
+    "updatedAt": "2024-12-15T00:00:00Z"
   }
 ]

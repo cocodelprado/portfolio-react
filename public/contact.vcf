@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Corentin Commino
+N:Commino;Corentin;;;
+EMAIL;TYPE=INTERNET:corentin.commino@email.com
+URL;TYPE=GitHub:https://github.com/cocodelprado
+URL;TYPE=Portfolio:https://portfolio-react-cocodelprado.vercel.app
+NOTE:Développeur Front-End React — Promo 2025
+END:VCARD
