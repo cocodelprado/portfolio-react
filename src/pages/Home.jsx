@@ -91,7 +91,7 @@ export default function Home() {
             </Suspense>
           </Float>
 
-          {/* C'est ici que la caméra tourne, mais elle n'entraîne que le modèle maintenant ! */}
+          {/* */}
           <OrbitControls 
             enablePan={false} 
             enableZoom={true} 
