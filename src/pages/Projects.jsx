@@ -34,6 +34,10 @@ const GlobalStyles = () => {
         0%   { background-position: -400px 0; }
         100% { background-position: 400px 0; }
       }
+      @keyframes subSlide {
+        from { opacity: 0; transform: translateY(-6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
 
       .glass-panel { animation: slideIn 0.6s cubic-bezier(0.22,1,0.36,1) both; }
 
@@ -42,8 +46,12 @@ const GlobalStyles = () => {
         padding: 18px; border-radius: 18px;
         border: 1px solid rgba(255,255,255,0.55);
         box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease, background 0.2s ease, border-color 0.2s;
-        animation: fadeUp 0.4s ease both; cursor: default;
+        transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1),
+                    box-shadow 0.28s ease,
+                    background 0.2s ease,
+                    border-color 0.2s;
+        animation: fadeUp 0.4s ease both;
+        cursor: default;
       }
       .project-card:hover {
         transform: translateY(-5px) scale(1.015);
@@ -56,21 +64,35 @@ const GlobalStyles = () => {
         padding: 7px 16px; border-radius: 30px; border: none;
         font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
         font-size: 0.8rem; font-weight: 500; cursor: pointer;
-        transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1); outline: none;
-        white-space: nowrap;
+        transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+        outline: none; white-space: nowrap;
       }
       .filter-btn:hover { transform: scale(1.06); }
+
+      .sub-btn {
+        padding: 5px 13px; border-radius: 20px; border: none;
+        font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+        font-size: 0.74rem; font-weight: 500; cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+        outline: none; white-space: nowrap;
+        animation: subSlide 0.25s ease both;
+      }
+      .sub-btn:hover { transform: scale(1.05); }
 
       .cv-btn {
         display: inline-block;
         background: linear-gradient(135deg, #0071e3 0%, #0a84ff 100%);
-        color: white; padding: 13px 28px; border-radius: 30px; text-decoration: none;
+        color: white; padding: 13px 28px; border-radius: 30px;
+        text-decoration: none;
         font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
         font-weight: 600; font-size: 0.95rem; letter-spacing: -0.01em;
         box-shadow: 0 4px 18px rgba(0,113,227,0.32);
         transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease;
       }
-      .cv-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 26px rgba(0,113,227,0.42); }
+      .cv-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 8px 26px rgba(0,113,227,0.42);
+      }
 
       .voir-lien {
         font-size: 0.82rem; color: #0071e3; text-decoration: none; font-weight: 600;
@@ -80,7 +102,6 @@ const GlobalStyles = () => {
       }
       .voir-lien:hover { opacity: 1; gap: 7px; }
 
-      /* Skeleton */
       .skeleton {
         background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
         background-size: 400px 100%;
@@ -88,7 +109,6 @@ const GlobalStyles = () => {
         border-radius: 10px;
       }
 
-      /* Grille responsive */
       .projects-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -100,11 +120,7 @@ const GlobalStyles = () => {
       @media (max-width: 640px) {
         .projects-grid { grid-template-columns: 1fr; }
         .glass-panel-wrapper { padding-left: 0 !important; padding-right: 0 !important; }
-        .glass-panel {
-          max-width: 100% !important;
-          border-radius: 0 !important;
-          min-height: 100vh !important;
-        }
+        .glass-panel { max-width: 100% !important; border-radius: 0 !important; min-height: 100vh !important; }
         .canvas-wrapper { display: none !important; }
         .filters-row { flex-wrap: wrap !important; }
       }
@@ -119,9 +135,9 @@ const GlobalStyles = () => {
   return null
 }
 
-/* ══════════════════════════════
+/* ══════════════════════════
    SCÈNE 3D : Globe réseau
-══════════════════════════════ */
+══════════════════════════ */
 function NetworkGlobe() {
   const groupRef = useRef()
 
@@ -133,7 +149,11 @@ function NetworkGlobe() {
       const y = 1 - (i / (N - 1)) * 2
       const r = Math.sqrt(1 - y * y)
       const theta = golden * i
-      pts.push(new THREE.Vector3(Math.cos(theta) * r * 2.2, y * 2.2, Math.sin(theta) * r * 2.2))
+      pts.push(new THREE.Vector3(
+        Math.cos(theta) * r * 2.2,
+        y * 2.2,
+        Math.sin(theta) * r * 2.2
+      ))
     }
     const conns = []
     for (let i = 0; i < pts.length; i++)
@@ -178,7 +198,11 @@ function NetworkGlobe() {
       ))}
       <mesh>
         <sphereGeometry args={[2.18, 48, 48]} />
-        <meshStandardMaterial color="#e8f0ff" transparent opacity={0.06} roughness={0.1} metalness={0.2} side={THREE.BackSide} />
+        <meshStandardMaterial
+          color="#e8f0ff" transparent opacity={0.06}
+          roughness={0.1} metalness={0.2}
+          side={THREE.BackSide}
+        />
       </mesh>
     </group>
   )
@@ -192,7 +216,10 @@ function Loader3D() {
   }, [])
   return (
     <Html center>
-      <div style={{ color: '#1d1d1f', fontFamily: 'monospace', fontSize: '18px', letterSpacing: '5px', fontWeight: 'bold' }}>
+      <div style={{
+        color: '#1d1d1f', fontFamily: 'monospace',
+        fontSize: '18px', letterSpacing: '5px', fontWeight: 'bold',
+      }}>
         {dots}
       </div>
     </Html>
@@ -201,9 +228,9 @@ function Loader3D() {
 
 /* ─── Hook GitHub API ─── */
 function useGitHubRepos() {
-  const [repos, setRepos]   = useState([])
+  const [repos, setRepos]     = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError]   = useState(null)
+  const [error, setError]     = useState(null)
 
   const fetchRepos = async () => {
     setLoading(true)
@@ -216,23 +243,26 @@ function useGitHubRepos() {
         `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=30&sort=updated`,
         { headers }
       )
-      if (!res.ok) throw new Error(`GitHub API: ${res.status}`)
+      if (!res.ok) throw new Error(`GitHub API erreur ${res.status}`)
       const data = await res.json()
 
+      // ✅ On garde TOUS les repos publics non-forks — pas de filtre anti-doublon ici
       const mapped = data
         .filter(r => !r.fork)
         .map(r => ({
-          id: `gh-${r.name}`,
-          title: r.name,
+          id:          `gh-${r.id}`,
+          title:       r.name,
           description: r.description || 'Pas de description disponible.',
-          techs: r.language ? [r.language] : [],
-          type: 'Web',
-          liveUrl: r.homepage || r.html_url,
-          githubUrl: r.html_url,
-          stars: r.stargazers_count,
-          updatedAt: r.updated_at,
-          source: 'github',
+          techs:       r.language ? [r.language] : [],
+          type:        'Github',   // ← catégorie dédiée
+          subType:     null,
+          liveUrl:     r.homepage || r.html_url,
+          githubUrl:   r.html_url,
+          stars:       r.stargazers_count,
+          updatedAt:   r.updated_at,
+          source:      'github',
         }))
+
       setRepos(mapped)
     } catch (err) {
       setError(err.message)
@@ -245,17 +275,22 @@ function useGitHubRepos() {
   return { repos, loading, error, retry: fetchRepos }
 }
 
-/* ─── Merge GitHub + JSON (JSON prioritaire sur les doublons) ─── */
+/* ─── Merge : JSON local + GitHub (séparés, pas de déduplication) ─── */
 function mergeProjects(githubRepos, jsonProjects) {
-  const jsonTitles = new Set(jsonProjects.map(p => p.title.toLowerCase()))
-  const filteredGitHub = githubRepos.filter(r => !jsonTitles.has(r.title.toLowerCase()))
-  return [...jsonProjects.map(p => ({ ...p, source: 'json' })), ...filteredGitHub]
+  return [
+    ...jsonProjects.map(p => ({ ...p, source: p.source || 'json' })),
+    ...githubRepos,
+  ]
 }
 
-/* ─── Squelette de chargement ─── */
+/* ─── Skeleton ─── */
 function SkeletonCard() {
   return (
-    <div style={{ padding: '18px', borderRadius: '18px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.4)' }}>
+    <div style={{
+      padding: '18px', borderRadius: '18px',
+      background: 'rgba(255,255,255,0.6)',
+      border: '1px solid rgba(255,255,255,0.4)',
+    }}>
       <div className="skeleton" style={{ height: '18px', width: '60%', marginBottom: '10px' }} />
       <div className="skeleton" style={{ height: '14px', width: '100%', marginBottom: '6px' }} />
       <div className="skeleton" style={{ height: '14px', width: '80%', marginBottom: '14px' }} />
@@ -268,29 +303,51 @@ function SkeletonCard() {
 }
 
 const AP = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif"
-const CATEGORIES = ['Tous', 'Web', 'Stage', 'Mobile', 'Design']
-const SORTS = [
-  { value: 'recent',  label: 'Plus récents' },
-  { value: 'alpha',   label: 'A → Z' },
+
+const CATEGORIES = [
+  { label: 'Tous',    value: 'Tous',   sub: null },
+  { label: 'École',   value: 'Ecole',  sub: ['BTS', 'L3'] },
+  { label: 'Perso',   value: 'Perso',  sub: null },
+  { label: '⭐ GitHub', value: 'Github', sub: null },
 ]
 
+const SORTS = [
+  { value: 'recent', label: 'Plus récents' },
+  { value: 'alpha',  label: 'A → Z' },
+]
+
+/* ════════════════════════════
+   PAGE PROJECTS PRINCIPALE
+════════════════════════════ */
 export default function Projects() {
   const { repos, loading, error, retry } = useGitHubRepos()
 
   const [search, setSearch]     = useState('')
   const [category, setCategory] = useState('Tous')
+  const [subCat, setSubCat]     = useState(null)
   const [sort, setSort]         = useState('recent')
   const [animKey, setAnimKey]   = useState(0)
 
-  const allProjects = useMemo(() => mergeProjects(repos, localProjects), [repos])
+  const allProjects = useMemo(
+    () => mergeProjects(repos, localProjects),
+    [repos]
+  )
+
+  const activeCat = CATEGORIES.find(c => c.value === category)
 
   const displayed = useMemo(() => {
     let list = allProjects
 
-    // Filtre catégorie
-    if (category !== 'Tous') list = list.filter(p => p.type === category)
+    if (category !== 'Tous') {
+      if (category === 'Ecole' && subCat) {
+        list = list.filter(p => p.subType === subCat)
+      } else if (category === 'Ecole') {
+        list = list.filter(p => p.type === 'Ecole')
+      } else {
+        list = list.filter(p => p.type === category)
+      }
+    }
 
-    // Filtre recherche (nom + techs)
     if (search.trim()) {
       const q = search.toLowerCase()
       list = list.filter(p =>
@@ -300,7 +357,6 @@ export default function Projects() {
       )
     }
 
-    // Tri
     if (sort === 'recent') {
       list = [...list].sort((a, b) => {
         if (!a.updatedAt && !b.updatedAt) return 0
@@ -313,17 +369,28 @@ export default function Projects() {
     }
 
     return list
-  }, [allProjects, search, category, sort])
+  }, [allProjects, search, category, subCat, sort])
 
-  const handleCategory = (cat) => { setCategory(cat); setAnimKey(k => k + 1) }
+  const handleCategory = (cat) => { setCategory(cat); setSubCat(null); setAnimKey(k => k + 1) }
+  const handleSubCat   = (sub) => { setSubCat(prev => prev === sub ? null : sub); setAnimKey(k => k + 1) }
+
+  // Compteur GitHub pour le badge
+  const githubCount = repos.length
 
   return (
     <>
       <GlobalStyles />
-      <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#ffffff' }}>
+      <div style={{
+        width: '100vw', height: '100vh',
+        position: 'relative', overflow: 'hidden',
+        background: '#ffffff',
+      }}>
 
-        {/* Globe 3D en fond */}
-        <div className="canvas-wrapper" style={{ position: 'absolute', top: 0, right: 0, width: '48%', height: '100%', zIndex: 1 }}>
+        {/* ── Globe 3D ── */}
+        <div className="canvas-wrapper" style={{
+          position: 'absolute', top: 0, right: 0,
+          width: '48%', height: '100%', zIndex: 1,
+        }}>
           <Canvas camera={{ position: [0, 0, 7], fov: 42 }} gl={{ antialias: true, alpha: false }}>
             <color attach="background" args={['#ffffff']} />
             <ambientLight intensity={0.9} />
@@ -339,7 +406,7 @@ export default function Projects() {
           </Canvas>
         </div>
 
-        {/* Panneau principal */}
+        {/* ── Panneau principal ── */}
         <div
           className="glass-panel-wrapper"
           style={{
@@ -361,7 +428,7 @@ export default function Projects() {
             borderRadius: '26px',
             boxShadow: '0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 48px rgba(0,0,0,0.08)',
             border: '1px solid rgba(200,210,230,0.5)',
-            display: 'flex', flexDirection: 'column', gap: '0',
+            display: 'flex', flexDirection: 'column',
           }}>
 
             {/* En-tête */}
@@ -370,11 +437,16 @@ export default function Projects() {
                 fontFamily: AP, fontSize: '0.72rem', fontWeight: '600',
                 color: '#0071e3', letterSpacing: '1.8px', textTransform: 'uppercase',
                 display: 'block', marginBottom: '6px',
-              }}>Portfolio · Corentin Commino</span>
+              }}>
+                Portfolio · Corentin Commino
+              </span>
               <h1 style={{
                 fontFamily: AP, fontSize: '2.6rem', fontWeight: 800,
-                letterSpacing: '-0.04em', color: '#1d1d1f', lineHeight: 1.05, marginBottom: '8px',
-              }}>Mes Projets.</h1>
+                letterSpacing: '-0.04em', color: '#1d1d1f',
+                lineHeight: 1.05, marginBottom: '8px',
+              }}>
+                Mes Projets.
+              </h1>
               <p style={{ fontFamily: AP, fontSize: '0.95rem', lineHeight: '1.6', color: '#6e6e73' }}>
                 Réalisations web (GitHub) et missions en infrastructure & réseau.
               </p>
@@ -385,17 +457,52 @@ export default function Projects() {
               <SearchBar value={search} onChange={setSearch} />
             </div>
 
-            {/* Filtres catégories + tri */}
-            <div className="filters-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', flexShrink: 0, flexWrap: 'wrap' }}>
+            {/* Filtres principaux */}
+            <div
+              className="filters-row"
+              style={{
+                display: 'flex', alignItems: 'center',
+                gap: '8px', marginBottom: activeCat?.sub ? '8px' : '14px',
+                flexShrink: 0, flexWrap: 'wrap',
+              }}
+            >
               {CATEGORIES.map(cat => (
-                <button key={cat} className="filter-btn" onClick={() => handleCategory(cat)} style={{
-                  backgroundColor: category === cat ? '#1d1d1f' : 'rgba(255,255,255,0.65)',
-                  color: category === cat ? '#fff' : '#424245',
-                  boxShadow: category === cat ? '0 2px 10px rgba(0,0,0,0.18)' : '0 1px 4px rgba(0,0,0,0.06)',
-                }}>{cat}</button>
+                <button
+                  key={cat.value}
+                  className="filter-btn"
+                  onClick={() => handleCategory(cat.value)}
+                  style={{
+                    backgroundColor: category === cat.value ? '#1d1d1f' : 'rgba(255,255,255,0.65)',
+                    color: category === cat.value ? '#fff' : '#424245',
+                    boxShadow: category === cat.value
+                      ? '0 2px 10px rgba(0,0,0,0.18)'
+                      : '0 1px 4px rgba(0,0,0,0.06)',
+                    outline: cat.value === 'Ecole' && subCat ? '2px solid #0071e3' : 'none',
+                    position: 'relative',
+                  }}
+                >
+                  {cat.label}
+                  {cat.sub && <span style={{ marginLeft: '4px', fontSize: '0.65rem', opacity: 0.7 }}>▾</span>}
+                  {/* Badge compteur GitHub */}
+                  {cat.value === 'Github' && githubCount > 0 && !loading && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '-6px', right: '-6px',
+                      background: '#0071e3',
+                      color: '#fff',
+                      fontSize: '0.6rem',
+                      fontWeight: 700,
+                      borderRadius: '20px',
+                      padding: '1px 5px',
+                      lineHeight: '1.4',
+                    }}>
+                      {githubCount}
+                    </span>
+                  )}
+                </button>
               ))}
 
-              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <select
                   value={sort}
                   onChange={e => setSort(e.target.value)}
@@ -403,29 +510,89 @@ export default function Projects() {
                     padding: '6px 10px', borderRadius: '10px',
                     border: '1.5px solid rgba(0,0,0,0.1)',
                     background: 'rgba(255,255,255,0.85)',
-                    fontFamily: AP, fontSize: '0.78rem', color: '#1d1d1f',
-                    outline: 'none', cursor: 'pointer',
+                    fontFamily: AP, fontSize: '0.78rem',
+                    color: '#1d1d1f', outline: 'none', cursor: 'pointer',
                   }}
                 >
                   {SORTS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                 </select>
-                <span style={{ fontFamily: AP, fontSize: '0.75rem', color: '#aeaeb2', fontWeight: '500', whiteSpace: 'nowrap' }}>
+                <span style={{
+                  fontFamily: AP, fontSize: '0.75rem',
+                  color: '#aeaeb2', fontWeight: '500', whiteSpace: 'nowrap',
+                }}>
                   {displayed.length} projet{displayed.length > 1 ? 's' : ''}
                 </span>
               </div>
             </div>
 
-            {/* Contenu scrollable */}
-            <div className="projects-scroll" style={{ overflowY: 'auto', flex: 1, paddingRight: '4px', paddingBottom: '4px' }}>
+            {/* Sous-catégories École */}
+            {activeCat?.sub && (
+              <div style={{
+                display: 'flex', gap: '6px',
+                marginBottom: '14px', flexShrink: 0, paddingLeft: '4px',
+              }}>
+                <div style={{
+                  width: '2px', borderRadius: '2px',
+                  background: 'linear-gradient(to bottom, #0071e3, #34aadc)',
+                  marginRight: '4px', flexShrink: 0,
+                }} />
+                {activeCat.sub.map((sub, i) => (
+                  <button
+                    key={sub}
+                    className="sub-btn"
+                    onClick={() => handleSubCat(sub)}
+                    style={{
+                      animationDelay: `${i * 60}ms`,
+                      backgroundColor: subCat === sub ? '#0071e3' : 'rgba(0,113,227,0.08)',
+                      color: subCat === sub ? '#fff' : '#0071e3',
+                      boxShadow: subCat === sub ? '0 2px 10px rgba(0,113,227,0.3)' : 'none',
+                    }}
+                  >
+                    {sub}
+                  </button>
+                ))}
+                {subCat && (
+                  <button
+                    className="sub-btn"
+                    onClick={() => { setSubCat(null); setAnimKey(k => k + 1) }}
+                    style={{ backgroundColor: 'transparent', color: '#aeaeb2', fontSize: '0.7rem' }}
+                  >
+                    ✕ Tout l'École
+                  </button>
+                )}
+              </div>
+            )}
 
-              {/* Chargement */}
-              {loading && (
+            {/* Bannière GitHub chargement */}
+            {category === 'Github' && loading && (
+              <div style={{
+                padding: '10px 14px', borderRadius: '12px',
+                background: 'rgba(0,113,227,0.06)',
+                border: '1px solid rgba(0,113,227,0.15)',
+                marginBottom: '12px', flexShrink: 0,
+                fontFamily: AP, fontSize: '0.82rem', color: '#0071e3',
+              }}>
+                ⏳ Chargement de tes repos GitHub...
+              </div>
+            )}
+
+            {/* Zone scrollable */}
+            <div
+              className="projects-scroll"
+              style={{ overflowY: 'auto', flex: 1, paddingRight: '4px', paddingBottom: '4px' }}
+            >
+              {loading && category !== 'Github' && (
                 <div className="projects-grid" key="loading">
                   {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
                 </div>
               )}
 
-              {/* Erreur GitHub */}
+              {loading && category === 'Github' && (
+                <div className="projects-grid" key="loading-gh">
+                  {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+              )}
+
               {!loading && error && (
                 <div style={{
                   padding: '20px', borderRadius: '16px',
@@ -433,59 +600,75 @@ export default function Projects() {
                   marginBottom: '16px', fontFamily: AP,
                 }}>
                   <p style={{ fontSize: '0.88rem', color: '#c0392b', marginBottom: '10px' }}>
-                    ⚠️ Impossible de charger les projets GitHub : {error}
+                    ⚠️ Impossible de charger les repos GitHub : {error}
                   </p>
                   <button onClick={retry} style={{
                     padding: '7px 16px', borderRadius: '20px', border: 'none',
-                    background: '#c0392b', color: '#fff', fontFamily: AP,
-                    fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer',
+                    background: '#c0392b', color: '#fff',
+                    fontFamily: AP, fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer',
                   }}>
-                    Réessayer
+                    🔄 Réessayer
                   </button>
                 </div>
               )}
 
-              {/* Grille projets */}
               {!loading && (
-                <>
-                  {displayed.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '40px 20px', fontFamily: AP }}>
-                      <p style={{ fontSize: '2rem', marginBottom: '8px' }}>🔍</p>
-                      <p style={{ fontSize: '0.95rem', color: '#6e6e73' }}>
-                        Aucun projet ne correspond à votre recherche.
-                      </p>
+                displayed.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '40px 20px', fontFamily: AP }}>
+                    <p style={{ fontSize: '2rem', marginBottom: '8px' }}>
+                      {category === 'Github' ? '🐙' : '🔍'}
+                    </p>
+                    <p style={{ fontSize: '0.95rem', color: '#6e6e73', marginBottom: '8px' }}>
+                      {category === 'Github'
+                        ? 'Aucun repo public trouvé sur GitHub.'
+                        : 'Aucun projet ne correspond à votre recherche.'
+                      }
+                    </p>
+                    {category === 'Github' && (
+                      <button onClick={retry} style={{
+                        marginTop: '8px', padding: '8px 18px',
+                        borderRadius: '20px', border: 'none',
+                        background: '#0071e3', color: '#fff',
+                        fontFamily: AP, fontSize: '0.82rem', cursor: 'pointer',
+                      }}>
+                        🔄 Recharger
+                      </button>
+                    )}
+                    {category !== 'Github' && (
                       <button
-                        onClick={() => { setSearch(''); setCategory('Tous') }}
+                        onClick={() => { setSearch(''); setCategory('Tous'); setSubCat(null) }}
                         style={{
-                          marginTop: '14px', padding: '8px 18px', borderRadius: '20px',
-                          border: 'none', background: '#1d1d1f', color: '#fff',
+                          marginTop: '14px', padding: '8px 18px',
+                          borderRadius: '20px', border: 'none',
+                          background: '#1d1d1f', color: '#fff',
                           fontFamily: AP, fontSize: '0.82rem', cursor: 'pointer',
                         }}
                       >
                         Réinitialiser les filtres
                       </button>
-                    </div>
-                  ) : (
-                    <div className="projects-grid" key={`${animKey}-${category}-${sort}`}>
-                      {displayed.map((project, i) => (
-                        <ProjectCard
-                          key={project.id}
-                          project={project}
-                          style={{ animationDelay: `${i * 45}ms` }}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
+                    )}
+                  </div>
+                ) : (
+                  <div className="projects-grid" key={`${animKey}-${category}-${subCat}-${sort}`}>
+                    {displayed.map((project, i) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        style={{ animationDelay: `${i * 45}ms` }}
+                      />
+                    ))}
+                  </div>
+                )
               )}
             </div>
 
             {/* Bouton CV */}
             <div style={{ paddingTop: '20px', flexShrink: 0 }}>
               <a href="/cv.pdf" download="CV_Corentin_Commino.pdf" className="cv-btn">
-                Télécharger mon CV
+                📄 Télécharger mon CV
               </a>
             </div>
+
           </div>
         </div>
       </div>
